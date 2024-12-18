@@ -1,39 +1,28 @@
-// استيراد المكتبة الأساسية لـ Flutter
 import 'package:flutter/material.dart';
+import 'validation_form.dart';
+import 'input_fields_page.dart';
 
-// نقطة البداية للتطبيق
 void main() {
   runApp(const MyApp());
 }
 
-// الويدجت الرئيسي للتطبيق
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // عنوان التطبيق
       title: 'نموذج إدخال',
-      // تعريف سمات التطبيق
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6B4CE6),
-          primary: const Color(0xFF6B4CE6),
-          secondary: const Color(0xFF4CC9F0),
-        ),
+        primarySwatch: Colors.blue,
         useMaterial3: true,
-        fontFamily: 'Arial',
       ),
-      // تحديد الصفحة الرئيسية
-      home: const MyFormPage(),
-      // تعيين اللغة العربية كلغة افتراضية
+      home: const InputFieldsPage(),
       locale: const Locale('ar', 'SA'),
     );
   }
 }
 
-// صفحة النموذج - ويدجت متغير الحالة
 class MyFormPage extends StatefulWidget {
   const MyFormPage({super.key});
 
@@ -41,17 +30,12 @@ class MyFormPage extends StatefulWidget {
   State<MyFormPage> createState() => _MyFormPageState();
 }
 
-// حالة صفحة النموذج - تحتوي على المنطق والحالة
 class _MyFormPageState extends State<MyFormPage> {
-  // مفتاح فريد للنموذج للتحقق من صحة البيانات
   final _formKey = GlobalKey<FormState>();
-  // إنشاء 4 متحكمات للحقول النصية
   final List<TextEditingController> _controllers = List.generate(4, (_) => TextEditingController());
 
-  // دالة للتنظيف عند إغلاق الصفحة
   @override
   void dispose() {
-    // تحرير الموارد المستخدمة في المتحكمات
     for (var controller in _controllers) {
       controller.dispose();
     }
@@ -61,9 +45,7 @@ class _MyFormPageState extends State<MyFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // خلفية متدرجة للتطبيق
       backgroundColor: const Color(0xFFF5F5F5),
-      // شريط التطبيق العلوي
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -77,9 +59,7 @@ class _MyFormPageState extends State<MyFormPage> {
         ),
         centerTitle: true,
       ),
-      // محتوى الصفحة
       body: Directionality(
-        // تعيين اتجاه النص من اليمين إلى اليسار
         textDirection: TextDirection.rtl,
         child: Container(
           decoration: BoxDecoration(
@@ -95,18 +75,14 @@ class _MyFormPageState extends State<MyFormPage> {
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
-              // نموذج لتجميع حقول الإدخال
               child: Form(
                 key: _formKey,
                 child: Column(
-                  // توسيط المحتوى عموديًا
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 20),
-                    // إنشاء 4 حقول نصية بشكل ديناميكي
                     ...List.generate(4, (index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      // حقل النص مع التنسيق
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -126,7 +102,6 @@ class _MyFormPageState extends State<MyFormPage> {
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w600,
                             ),
-                            // تنسيق حدود الحقل
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide: BorderSide.none,
@@ -157,9 +132,7 @@ class _MyFormPageState extends State<MyFormPage> {
                         ),
                       ),
                     )),
-                    // مسافة بين الحقول والزر
                     const SizedBox(height: 30),
-                    // زر الإجراء
                     Container(
                       height: 55,
                       decoration: BoxDecoration(
@@ -180,7 +153,6 @@ class _MyFormPageState extends State<MyFormPage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          // التحقق من صحة النموذج عند الضغط
                           if (_formKey.currentState!.validate()) {
                             // يمكن إضافة الإجراء هنا
                           }
